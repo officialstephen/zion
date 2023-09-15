@@ -14,7 +14,7 @@ cd .
 
 # Start your Node.js application using a process manager like PM2
 # Make sure PM2 is installed globally: npm install -g pm2
-pm2 start app.js --name your-app-name
+pm2 start index.js --name zion
 
 # Optionally, you can monitor your app using PM2 by running:
 # pm2 monit
