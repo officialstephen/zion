@@ -30,6 +30,6 @@ jobs:
         run: |
           # Replace the following lines with your deployment commands
           scp -r ./dist root@104.248.253.143:/root/node-apps
-          ssh user@104.248.253.143 'cd /root/node-apps && npm install && pm2 restart zion'
+          ssh root@104.248.253.143 'cd /root/node-apps && npm install && pm2 restart zion'
 
       # Add any additional steps you need for your deployment process here.
