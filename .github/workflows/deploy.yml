@@ -29,6 +29,7 @@ jobs:
       - name: Deploy to server
         run: |
           # Replace the following lines with your deployment commands
-          ssh root@104.248.253.143 'cd /root/node-apps && npm install && pm2 restart zion'
+          ssh -o StrictHostKeyChecking=no root@104.248.253.143 'cd /root/node-apps && npm install && pm2 restart zion'
+          # ssh root@104.248.253.143 'cd /root/node-apps && npm install && pm2 restart zion'
 
       # Add any additional steps you need for your deployment process here.
