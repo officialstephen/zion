@@ -1,0 +1,38 @@
+name: Zion app
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
+
+      - name: Deploy to server
+        run: |
+          # Replace the following lines with your deployment commands
+          # ssh -o StrictHostKeyChecking=no root@104.248.253.143 'mkdir -p node-apps && tar -xzf deploy.tar.gz -C node-apps --strip-components=1'
+          # ssh -o StrictHostKeyChecking=no root@104.248.253.143 'cd node-apps && npm install && pm2 restart zion'
+          ssh -o StrictHostKeyChecking=no root@104.248.253.143 'cd node-apps'
+          # ssh root@104.248.253.143 'cd node-apps && npm install && pm2 restart zion'
+
+      # Add any additional steps you need for your deployment process here.
