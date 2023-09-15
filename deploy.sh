@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Navigate to your project directory (change the path as needed)
-cd .
+cd /root/node-apps
 
 # Ensure you're using the correct version of Node.js (optional)
 # nvm use <node_version>

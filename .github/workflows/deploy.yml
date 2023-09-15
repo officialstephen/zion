@@ -1,9 +1,9 @@
-name: Deploy zion to DigitalOcean
+name: Zion app
 
 on:
   push:
     branches:
-      - main # Change this to your main branch
+      - main # Change this to your main branch name
 
 jobs:
   deploy:
@@ -13,11 +13,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up SSH key
-        uses: webfactory/ssh-agent@v0.4.1
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          ssh-private-key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
+          node-version: "14" # Change to your desired Node.js version
 
-      - name: Deploy to DigitalOcean
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build and test
         run: |
-          ssh root@46.101.122.80 "cd /zion_ && git pull origin main && ./deploy.sh"  # Modify this line
+          npm run build  # Adjust this to your build command
+          npm test       # Adjust this to your test command
+
+      - name: Deploy to server
+        run: |
+          # Replace the following lines with your deployment commands
+          scp -r ./dist root@104.248.253.143:/root/node-apps
+          ssh user@104.248.253.143 'cd /root/node-apps && npm install && pm2 restart zion'
+
+      # Add any additional steps you need for your deployment process here.
