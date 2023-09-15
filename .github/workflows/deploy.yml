@@ -21,8 +21,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Add host key to known hosts
-        run: ssh-keyscan -H 104.248.253.143 >> ~/.ssh/known_hosts
+       - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
 
       - name: Deploy to server
         run: |
