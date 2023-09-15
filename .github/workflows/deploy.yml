@@ -21,6 +21,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Add host key to known hosts
+        run: ssh-keyscan -H 104.248.253.143 >> ~/.ssh/known_hosts
+
       - name: Deploy to server
         run: |
           # Replace the following lines with your deployment commands
