@@ -4,7 +4,8 @@
   "description": "A simple node app here",
   "main": "index.js",
   "scripts": {
-    "start":"node index.js",
+    "start": "node index.js",
+    "build": "mkdir -p dist && cp -r * dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Stephen",
