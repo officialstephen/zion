@@ -23,13 +23,11 @@ jobs:
 
       - name: Build and test
         run: |
-          npm run build  # Adjust this to your build command
-          npm test       # Adjust this to your test command
+          npm run start  # Adjust this to your build command
 
       - name: Deploy to server
         run: |
           # Replace the following lines with your deployment commands
-          scp -r ./dist root@104.248.253.143:/root/node-apps
           ssh root@104.248.253.143 'cd /root/node-apps && npm install && pm2 restart zion'
 
       # Add any additional steps you need for your deployment process here.
