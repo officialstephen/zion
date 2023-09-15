@@ -20,8 +20,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-        npm install
-        tar -czvf deploy.tar.gz . /* create tar file */
+          npm install
+          tar -czvf deploy.tar.gz . /* create tar file */
 
       - name: Set up SSH key
         uses: webfactory/ssh-agent@v0.4.1
