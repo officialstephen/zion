@@ -20,4 +20,4 @@ jobs:
 
       - name: Deploy to DigitalOcean
         run: |
-          ssh root@46.101.122.80 "cd /path/to/your/app && git pull origin main && ./deploy.sh"  # Modify this line
+          ssh root@46.101.122.80 "cd /zion_ && git pull origin main && ./deploy.sh"  # Modify this line
