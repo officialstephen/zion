@@ -33,6 +33,7 @@ jobs:
           username: ${{ secrets.DO_USERNAME }}
           script: |
             cd ${PROJECT_DIR}
-            git pull origin main
+            git clone https://github.com/officialstephen/zion.git .  # Clone the repository
+            git pull origin main  # Pull the latest changes from the 'main' branch
             npm install
             pm2 restart zion
