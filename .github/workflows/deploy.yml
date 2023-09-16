@@ -19,6 +19,10 @@ jobs:
       - uses: actions/checkout@v2
       # - name: Clone repository
       #   run: git clone https://github.com/officialstephen/zion.git
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14" # Change to your desired Node.js version
       - name: Deploy to DO
         env:
           PROJECT_DIR: zion
@@ -28,8 +32,6 @@ jobs:
           key: ${{ secrets.DO_PRIVATE_KEY }}
           username: ${{ secrets.DO_USERNAME }}
           script: |
-            git init
-            git clone https://github.com/officialstephen/zion.git
             cd ${PROJECT_DIR}
             git pull origin main
             npm install
