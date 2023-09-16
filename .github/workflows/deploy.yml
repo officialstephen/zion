@@ -1,46 +1,29 @@
-name: Deploy to DigitalOcean
+name: Deploy Node.js app to DigitalOcean
 
 on:
   push:
-    branches: main
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
       - run: npm install
+
       # - run: npm run build
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Debugging info
-        run: |
-          echo "GitHub workspace: $GITHUB_WORKSPACE"
-          ls -al $GITHUB_WORKSPACE
-          echo "SSH Key:"
-          cat $HOME/.ssh/id_rsa
-          echo "Known hosts:"
-          cat $HOME/.ssh/known_hosts
-          echo "Deploy key:"
-          cat $HOME/.ssh/deploy_key
-      - uses: actions/checkout@v2
+      - name: Deploy to DigitalOcean
+        uses: digitalocean/deployments@v2
         with:
-          repository: officialstephen/zion # Update this with your repository URL
-          path: zion # Update this to match your project directory
-
-      - name: Deploy to DO
-        env:
-          PROJECT_DIR: zion
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.DO_HOST }}
-          key: ${{ secrets.DO_PRIVATE_KEY }}
-          username: ${{ secrets.DO_USERNAME }}
-          script: |
-            cd ${PROJECT_DIR}
-            git pull origin main
-            npm install
-            pm2 restart zion
+          do_host: ${{ secrets.DO_HOST }}
+          do_username: ${{ secrets.DO_USERNAME }}
+          do_ssh_key: ${{ secrets.DO_PRIVATE_KEY }}
+          app_name: zion
