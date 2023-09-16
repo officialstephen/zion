@@ -17,14 +17,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Clone repository
+        run: git clone https://github.com/officialstephen/zion.git
       - name: Deploy to DO
+        env:
+          PROJECT_DIR: zion
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.DO_HOST }}
           key: ${{ secrets.DO_PRIVATE_KEY }}
           username: ${{ secrets.DO_USERNAME }}
           script: |
-            cd zion
+            cd ${PROJECT_DIR}
             git pull origin main
             npm install
             pm2 restart zion
