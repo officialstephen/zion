@@ -16,10 +16,20 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Debugging info
+        run: |
+          echo "GitHub workspace: $GITHUB_WORKSPACE"
+          ls -al $GITHUB_WORKSPACE
+          echo "SSH Key:"
+          cat $HOME/.ssh/id_rsa
+          echo "Known hosts:"
+          cat $HOME/.ssh/known_hosts
+          echo "Deploy key:"
+          cat $HOME/.ssh/deploy_key
       - uses: actions/checkout@v2
-
-      - name: Clone repository
-        run: git clone https://github.com/officialstephen/zion.git
+        with:
+          repository: officialstephen/zion # Update this with your repository URL
+          path: zion # Update this to match your project directory
 
       - name: Deploy to DO
         env:
