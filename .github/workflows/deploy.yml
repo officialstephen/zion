@@ -1,29 +1,36 @@
-name: Deploy Node.js app to DigitalOcean
+name: Deploy to DigitalOcean
 
 on:
   push:
-    branches:
-      - main
+    branches: main
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
+      - uses: actions/checkout@v2
       - run: npm install
-
       # - run: npm run build
 
-      - name: Deploy to DigitalOcean
-        uses: digitalocean/deployments@v2
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Clone repository
+        run: git clone https://github.com/officialstephen/zion.git
+
+      - name: Deploy to DO
+        env:
+          PROJECT_DIR: zion
+        uses: appleboy/ssh-action@master
         with:
-          do_host: ${{ secrets.DO_HOST }}
-          do_username: ${{ secrets.DO_USERNAME }}
-          do_ssh_key: ${{ secrets.DO_PRIVATE_KEY }}
-          app_name: zion
+          host: ${{ secrets.DO_HOST }}
+          key: ${{ secrets.DO_PRIVATE_KEY }}
+          username: ${{ secrets.DO_USERNAME }}
+          script: |
+            cd ${PROJECT_DIR}
+            git pull origin main
+            npm install
+            pm2 restart zion
