@@ -1,0 +1,14 @@
+{
+    "apps": [
+        {
+            "name": "zion-prod",
+            "script": "npm",
+            "args" : "start"
+        },
+        {
+            "name": "zion-stage",
+            "script": "npm",
+            "args" : "start"
+        }
+    ]
+}
